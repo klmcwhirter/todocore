@@ -29,6 +29,7 @@ namespace todocore.Controllers
         }
 
         // GET api/todos/5
+        // Returns the todo with Id of 5 as a JSON list
         [HttpGet("{id}")]
         public IList<Todo> Get(int id)
         {
@@ -38,6 +39,7 @@ namespace todocore.Controllers
         }
 
         // POST api/todos
+        // Create a todo based on the {todo} passed in. 
         [HttpPost]
         public void Post([FromBody]Todo todo)
         {
@@ -54,6 +56,7 @@ namespace todocore.Controllers
         }
 
         // PUT api/todos/5
+        // Update the todo with Id of {id} based on the {todo} passed in. 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Todo todo)
         {
@@ -69,6 +72,7 @@ namespace todocore.Controllers
         }
 
         // PUT api/todos/markComplete/5
+        // Marks the todo with id 5 as completed.
         [HttpPut("markComplete/{id}")]
         public void MarkComplete(int id)
         {
@@ -86,6 +90,7 @@ namespace todocore.Controllers
         }
 
         // DELETE api/todos/5
+        // Deletes the todo with Id of 5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
@@ -98,6 +103,7 @@ namespace todocore.Controllers
 
 
         // GET api/create
+        // Creates a sample todo
         [HttpGet("create")]
         public IEnumerable<string> Create()
         {
