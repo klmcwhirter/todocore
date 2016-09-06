@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using todocore.Models;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace todocore.Controllers
+{
+    [Route("api/[controller]")]
+    public class TodosController : Controller
+    {
+        private DbContextSqlite ctx;
+    
+        public TodosController (DbContextSqlite ctx)
+        {
+          this.ctx = ctx;
+        }
+
+        // GET api/todos
+        [HttpGet]
+        public IEnumerable<Todo> Get()
+        {
+            var todos = ctx.Todos.Include(c => c.TodoComments).ToList();
+
+            return todos;
+        }
+
+        // GET api/todos/5
+        [HttpGet("{id}")]
+        public IList<Todo> Get(int id)
+        {
+            var todos = ctx.Todos.Include(c => c.TodoComments).Where(t => t.Id == id).ToList();
+
+            return todos;
+        }
+
+        // POST api/todos
+        [HttpPost]
+        public void Post([FromBody]Todo todo)
+        {
+            if(ModelState.IsValid)
+            {
+                todo.CreateDate = DateTime.Now;
+                foreach (var c in todo.TodoComments)
+                {
+                    c.UpdatedOn = DateTime.Now;
+                }
+                ctx.Todos.Add(todo);
+                ctx.SaveChanges();
+            }
+        }
+
+        // PUT api/todos/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]Todo todo)
+        {
+            if(ModelState.IsValid)
+            {
+                foreach (var c in todo.TodoComments)
+                {
+                    c.UpdatedOn = DateTime.Now;
+                }
+                ctx.Todos.Update(todo);
+                ctx.SaveChanges();
+            }
+        }
+
+        // PUT api/todos/markComplete/5
+        [HttpPut("markComplete/{id}")]
+        public void MarkComplete(int id)
+        {
+            var todos = Get(id);
+            if(todos.Count() > 0)
+            {
+                foreach (var todo in todos)
+                {
+                    todo.IsComplete = true;
+                    todo.CompleteDate = DateTime.Now;
+                    ctx.Todos.Update(todo);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        // DELETE api/todos/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            var todos = Get(id);
+            if(todos.Count() < 1)
+            {
+                ctx.Todos.RemoveRange(todos);
+            }
+        }
+
+
+        // GET api/create
+        [HttpGet("create")]
+        public IEnumerable<string> Create()
+        {
+            var todo = new Todo {
+                Task = "A todo",
+                IsComplete = false,
+                CreateDate = DateTime.Now,
+                DueDate = DateTime.Now.Add(TimeSpan.FromDays(1.0)),
+                CompleteDate = null
+            };
+            ctx.Todos.Add(todo);
+            ctx.SaveChanges(); // Make sure the Id gets generated
+
+            var comments = new[] { "Comment 1", "Comment 2" };
+            foreach (var c in comments)
+            {
+                var comment = new TodoComment {
+                    Text = $"{c} for {todo.Id}",
+                    UpdatedOn = DateTime.Now,
+                    TodoId = todo.Id
+                };
+                ctx.TodoComments.Add(comment);
+            }
+            ctx.SaveChanges();
+
+            return new [] { "todo created" };
+        }
+    }
+}

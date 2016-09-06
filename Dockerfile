@@ -1,3 +1,5 @@
+# docker build -t klmcwhirter/todocore .
+
 FROM microsoft/dotnet:latest
 
 COPY . /app

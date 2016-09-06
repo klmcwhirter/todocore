@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/todos HTTP/1.1
+content-type: application/json
+
+{
+    "task": "A todo",
+    "createDate": "2016-09-04T23:30:28.682875",
+    "dueDate": "2016-09-05T23:30:28.682885",
+    "todoComments": [
+        {
+            "text": "Comment 1 for POSTed todo",
+            "updatedOn": "2016-09-04T23:32:28.685147",
+        },
+        {
+            "text": "Comment 2 for POSTed todo",
+            "updatedOn": "2016-09-04T23:33:28.685217",
+        }
+    ]
+}
