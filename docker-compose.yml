@@ -1,6 +1,8 @@
-version: '2'
+#version: '2'
 
-services:
+# CircleCI.com uses docker version 1.9.1 - so use a Version 1 docker-compose.yml file for now.
+
+#services:
     todocore:
         image: klmcwhirter/todocore
         ports:
