@@ -12,6 +12,7 @@
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Microsoft.EntityFrameworkCore": "1.0.0",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
     "Microsoft.EntityFrameworkCore.SQLite": "1.0.0",
@@ -61,7 +62,7 @@
   },
 
   "scripts": {
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+    "postpublish": ["dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"]
   },
 
   "tooling": {
