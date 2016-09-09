@@ -1,0 +1,58 @@
+{
+  "name": "todocore",
+  "version": "0.1.0",
+  "description": "This is an app written based on ASP.NET Core, Bootstrap and AngularJS 2.",
+  "scripts": {
+    "docker-build": "docker build -t klmcwhirter/todocore .",
+    "docker-run": "docker-compose up -d && docker-compose logs -f",
+    "docker-stop": "docker-compose down -v",
+    "sqlite": "sqlite3 bin/Debug/netcoreapp1.0/todocore.db",
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klmcwhirter/todocore.git"
+  },
+  "keywords": [
+    "aspnetcore",
+    "bootstrap",
+    "angularjs2",
+    "todo"
+  ],
+  "author": "Kevin McWhirter <klmcwhirter@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klmcwhirter/todocore/issues"
+  },
+  "homepage": "https://github.com/klmcwhirter/todocore#readme",
+  "devDependencies": {
+    "@angular/compiler": "^2.0.0-rc.6",
+    "compiler": "^0.1.2",
+    "del": "^2.2.2",
+    "eslint": "^3.4.0",
+    "gulp": "^3.9.1",
+    "gulp-dotnet": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.13.6",
+    "gulp-typings": "^2.0.4",
+    "lifecycle": "^1.0.4",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.3"
+  },
+  "dependencies": {
+    "@angular/common": "^2.0.0-rc.6",
+    "@angular/core": "^2.0.0-rc.6",
+    "@angular/platform-browser": "^2.0.0-rc.6",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.6",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.0-beta.11",
+    "systemjs": "^0.19.38",
+    "zone.js": "^0.6.17"
+  }
+}

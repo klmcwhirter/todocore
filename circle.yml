@@ -1,17 +1,21 @@
 machine:
+  node:
+    version: 6.5.0
+
   services:
     - docker
 
 dependencies:
   override:
     - docker info
-    - docker build --rm=false -t klmcwhirter/todocore .
+    - npm run docker-build
 
 test:
   override:
     - docker-compose up -d; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://localhost:5000/api/todos | fgrep '[]'
     - docker logs todocore_todocore_1
+    - docker-compose rm -v
 
 deployment:
   hub:

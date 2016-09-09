@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,7 +26,7 @@ namespace todocore
         {
             // Add framework services.
             services.AddMvc();
-            services.AddTransient<DbContextSqlite,DbContextSqlite>();
+            services.AddTransient<DbContextSqlite, DbContextSqlite>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +36,12 @@ namespace todocore
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseStaticFiles();
+            // app.Run(ctx =>
+            // {
+            //     ctx.Response.Redirect("/index.html");
+            //     return Task.FromResult(0);
+            // });
         }
     }
 }

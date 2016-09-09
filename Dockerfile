@@ -6,9 +6,14 @@ COPY . /app
 
 WORKDIR /app
 
-RUN ["dotnet", "restore"]
-
-RUN ["dotnet", "build"]
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -fr node_modules \
+    && npm install \
+    && dotnet restore \
+    && dotnet build \
+    && dotnet ef database update \
+    && ./node_modules/.bin/gulp build
 
 EXPOSE 5000/tcp
 
