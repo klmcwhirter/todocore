@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <th>Id</th>
+    <th>Task</th>
+    <th>Complete</th>
+    <th>Created</th>
+    <th>Due</th>
+    <th>Complete</th>
+    <th>Comments</th>
+  </thead>
+  <tr *ngFor="let todo of this.todos">
+    <td>{{todo.id}}</td>
+    <td>{{todo.task}}</td>
+    <td>{{todo.isComplete}}</td>
+    <td>{{todo.createDate | date: 'medium'}}</td>
+    <td>{{todo.dueDate | date: 'medium'}}</td>
+    <td>{{todo.completeDate | date: 'medium'}}</td>
+    <td>
+      <div *ngFor="let c of todo.todoComments">
+        {{c.id}} | {{c.text}} | {{c.updatedOn | date: 'medium'}}
+      </div><br/>
+    </td>
+  </tr>
+</table>

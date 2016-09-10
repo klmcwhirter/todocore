@@ -1,3 +1,5 @@
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,12 +38,19 @@ namespace todocore
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseMvcWithDefaultRoute();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-            // app.Run(ctx =>
-            // {
-            //     ctx.Response.Redirect("/index.html");
-            //     return Task.FromResult(0);
-            // });
+            app.Use(async (context, next) =>
+            {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html"; // Put your Angular root page here 
+                    await next();
+                }
+            });
         }
     }
 }
