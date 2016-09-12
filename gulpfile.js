@@ -67,7 +67,7 @@ gulp.task('build:lib:typings', function () {
     .pipe(gulpTypings());
 });
 
-gulp.task('build:lib', ['copy:lib', 'build:lib:typings'], function () {
+gulp.task('build:app', ['copy:css', 'copy:html', 'copy:lib', 'copy:sysjsconfig', 'build:lib:typings'], function () {
   var tsResult = tsProject.src()
     .pipe(gulpTypescript(tsProject));
 
@@ -75,4 +75,39 @@ gulp.task('build:lib', ['copy:lib', 'build:lib:typings'], function () {
     .pipe(gulp.dest('./wwwroot/app'));
 });
 
-gulp.task('build', ['build:lib', 'build:dotnet:update']);
+gulp.task('build', ['build:app', 'build:dotnet:update']);
+
+gulp.task('clean:app', function () {
+  return del([
+    './wwwroot',
+  ]);
+});
+
+gulp.task('clean:dotnet', function () {
+  return del([
+    './bin',
+    './obj'
+  ]);
+});
+
+gulp.task('clean', ['clean:dotnet', 'clean:app']);
+
+gulp.task('copy:html', function () {
+  return gulp.src('src/**/*.html')
+    .pipe(gulp.dest('./wwwroot'));
+});
+
+gulp.task('copy:lib', function () {
+  return gulp.src('node_modules/**/*')
+    .pipe(gulp.dest('./wwwroot/lib'));
+});
+
+gulp.task('copy:css', function () {
+  return gulp.src('src/**/*.css')
+    .pipe(gulp.dest('./wwwroot'));
+});
+
+gulp.task('copy:sysjsconfig', function () {
+  return gulp.src('./systemjs.config.js')
+    .pipe(gulp.dest('./wwwroot'));
+});

@@ -29,23 +29,18 @@
       '@angular2-material/toolbar': 'npm:@angular2-material/toolbar/toolbar.umd.js',
 
       // other libraries
-      'rxjs': 'npm:rxjs',
-      'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
+      'rxjs': 'npm:rxjs'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
       app: {
-        main: './main.js',
+        main: 'main.js',
         defaultExtension: 'js'
       },
       lib: {
         defaultExtension: 'js'
       },
       rxjs: {
-        defaultExtension: 'js'
-      },
-      'angular2-in-memory-web-api': {
-        main: './index.js',
         defaultExtension: 'js'
       }
     }
