@@ -30,7 +30,7 @@ namespace todocore.Controllers
 
         // GET api/todos/5
         // Returns the todo with Id of 5 as a JSON list
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IList<Todo> Get(int id)
         {
             var todos = ctx.Todos.Include(c => c.TodoComments).Where(t => t.Id == id).ToList();
@@ -57,7 +57,7 @@ namespace todocore.Controllers
 
         // PUT api/todos/5
         // Update the todo with Id of {id} based on the {todo} passed in. 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public void Put(int id, [FromBody]Todo todo)
         {
             if(ModelState.IsValid)
@@ -73,16 +73,20 @@ namespace todocore.Controllers
 
         // PUT api/todos/markComplete/5
         // Marks the todo with id 5 as completed.
-        [HttpPut("markComplete/{id}")]
-        public void MarkComplete(int id)
+        // PUT api/todos/markComplete/5/false
+        // Marks the todo with id 5 as NOT completed.
+        [Route("markComplete/{id:int}")]
+        [Route("markComplete/{id:int}/{isComplete:bool}")]
+        [HttpPut]
+        public void MarkComplete(int id, bool isComplete = true)
         {
             var todos = Get(id);
             if(todos.Count() > 0)
             {
                 foreach (var todo in todos)
                 {
-                    todo.IsComplete = true;
-                    todo.CompleteDate = DateTime.Now;
+                    todo.IsComplete = isComplete;
+                    todo.CompleteDate = isComplete ? DateTime.Now : (DateTime?)null;
                     ctx.Todos.Update(todo);
                     ctx.SaveChanges();
                 }
@@ -91,7 +95,7 @@ namespace todocore.Controllers
 
         // DELETE api/todos/5
         // Deletes the todo with Id of 5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
             var todos = Get(id);
@@ -130,6 +134,13 @@ namespace todocore.Controllers
             ctx.SaveChanges();
 
             return new [] { "todo created" };
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // Release db resources
+            ctx.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

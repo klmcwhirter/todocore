@@ -41,6 +41,19 @@ gulp.task('copy:lib', function () {
     .pipe(gulp.dest('./wwwroot/lib'));
 });
 
+gulp.task('default', ['help']);
+
+gulp.task('help', function () {
+  const taskList = Object.keys(gulp.tasks)
+    .filter(taskName => !taskName.startsWith(':'))
+    .filter(taskName => !taskName.startsWith('ci:'))
+    .filter(taskName => taskName != 'default')
+    .sort();
+
+  console.log(`\nHere's a list of supported tasks:\n   `, taskList.join('\n    '));
+  console.log(`\nYou're probably looking for "clean" or "build".\n\n`);
+});
+
 gulp.task('build:dotnet', function () {
   return gulpDotnet.build();
 });

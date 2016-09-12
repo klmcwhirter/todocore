@@ -8,10 +8,10 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "rootDirs": [
-      "./src/app",
-      "./wwwroot/lib"
-    ],
+    // "rootDirs": [
+    //   "./src/app",
+    //   "./wwwroot/lib"
+    // ],
     "outDir": "./wwwroot/app"
   },
   "exclude": [

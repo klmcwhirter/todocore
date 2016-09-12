@@ -1,0 +1,19 @@
+<md-sidenav-layout fullscreen>
+  <md-sidenav #sidenav>
+    <md-nav-list>
+    </md-nav-list>
+  </md-sidenav>
+
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="sidenav.open()">
+      <md-icon>menu</md-icon>
+    </button>
+    <span>{{title}</span>
+    <button md-fab (click)="formShowing=!formShowing">
+      <md-icon>add</md-icon>
+    </button>
+  </md-toolbar>
+
+  <todo-list layout="row"></todo-list>
+
+</md-sidenav-layout>
