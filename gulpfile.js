@@ -20,18 +20,23 @@ function dotnetUpdate(done) {
 }
 
 gulp.task('clean:dotnet', function () {
-  return del([
-    './bin',
-    './obj'
-  ]);
+  return del(['./bin/**', './obj/**'], {
+    dryRun: false
+  }).then(function (paths) {
+    console.log('Deleted files and folders:\n', paths.join('\n'));
+  }).catch(function (err) {
+    console.log('Delete failed: ' + err);
+  });
 });
 
 gulp.task('clean:lib', function () {
-  return del([
-    './wwwroot/app',
-    './wwwroot/lib',
-    './wwwroot/app/*.js'
-  ]);
+  return del(['./wwwroot/**'], {
+    dryRun: false
+  }).then(function (paths) {
+    console.log('Deleted files and folders:\n', paths.join('\n'));
+  }).catch(function (err) {
+    console.log('Delete failed: ' + err);
+  });
 });
 
 gulp.task('clean', ['clean:dotnet', 'clean:lib']);

@@ -1,9 +1,9 @@
+<td>{{todo.id}}</td>
 <td>{{todo.task}}</td>
-<td>Id: {{todo.id}}</td>
-<td>Created: {{todo.createDate | date: 'medium'}}</td>
-<td>Due: {{todo.dueDate | date: 'medium'}}</td>
-<td>Completed: {{todo.completeDate | date: 'medium'}}</td>
+<td>{{todo.createDate | date: 'medium'}}</td>
+<td>{{todo.dueDate | date: 'medium'}}</td>
+<td>{{todo.isComplete}}</td>
+<td>{{todo.completeDate | date: 'medium'}}</td>
 <td>
-  <todo-comment *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment">
-  </todo-comment>
+  <p *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment"></p>
 </td>

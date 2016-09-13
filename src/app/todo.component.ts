@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Todo }             from './todo.model';
 
 @Component({
-  selector: 'todo',
+  selector: 'tr[todo]',
   templateUrl: 'app/todo.component.html'
 })
 export class TodoComponent {

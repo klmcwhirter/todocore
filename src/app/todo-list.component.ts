@@ -5,13 +5,7 @@ import { TodosService } from './todos.service';
 
 @Component({
   selector: 'todo-list',
-  template: `
-  <table>
-  <tr *ngFor="let todo of this.todos">
-    <todo [todo]="todo"></todo>
-  </tr>
-  </table>
-  `,
+  templateUrl: 'app/todo-list.component.html',
   providers:  [ TodosService ]
 })
 export class TodoListComponent implements OnInit {
