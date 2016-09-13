@@ -4,32 +4,35 @@
   <title>todocore</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="lib/@angular2-material/core/style/core.css" rel="stylesheet">
 
   <!-- FontAwesome for md-icon demo. -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="css/styles.css">
-
-  <!-- Polyfill(s) for older browsers -->
-  <script src="lib/core-js/client/shim.min.js"></script>
-
-  <script src="lib/zone.js/dist/zone.js"></script>
-  <script src="lib/reflect-metadata/Reflect.js"></script>
-  <script src="lib/systemjs/dist/system.src.js"></script>
-
-  <script lang="javascript">
-    System.import('systemjs.config.js').then(function () {
-      System.import('app/main.js').catch(function (err) {
-        console.error(err);
-      });
-    });
-
-  </script>
 </head>
 
 <body>
   <todo-app>Loading...</todo-app>
+
+
+  <!-- Polyfill(s) for older browsers -->
+  <script src="lib/core-js/client/shim.js"></script>
+  <!--<script src="lib/es6-shim/es6-shim.js"></script>-->
+
+  <script src="lib/zone.js/dist/zone.js"></script>
+  <script src="lib/reflect-metadata/Reflect.js"></script>
+  <!--<script src="lib/systemjs/dist/system-polyfills.js"></script>-->
+  <script src="lib/systemjs/dist/system.src.js"></script>
+  <!--<script src="lib/systemjs/dist/system-csp-production.js"></script>-->
+  <script src="systemjs.config.js"></script>
+
+  <script lang="javascript">
+    System.import('app/main').catch(function (err) {
+      console.error(err);
+    });
+
+  </script>
+
 </body>
 
 </html>

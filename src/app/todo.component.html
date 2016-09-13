@@ -1,24 +1,9 @@
-<md-card>
-  <md-card-title>
-    <!--<md-icon ng-if="{{todo.isComplete}}">done</md-icon>-->
-    {{todo.task}}
-  </md-card-title>
-  <md-card-content>
-    <p>Id:
-      <!--<md-badge-primary data-badges=-->
-      {{todo.id}}
-      <!--</md-badge-primary>-->
-    </p>
-    <p>Created: {{todo.createDate | date: 'medium'}}</p>
-    <p>Due: {{todo.dueDate | date: 'medium'}}</p>
-    <p>Completed: {{todo.completeDate | date: 'medium'}}</p>
-    <todo-comment *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment">
-    </todo-comment>
-  </md-card-content>
-
-  <md-card-actions>
-    <!--<md-icon ng-if="{{todo.isComplete}}">done</md-icon>
-    <md-icon ng-if="{{!todo.isComplete}}">check circle</md-icon>-->
-  </md-card-actions>
-
-</md-card>
+<td>{{todo.task}}</td>
+<td>Id: {{todo.id}}</td>
+<td>Created: {{todo.createDate | date: 'medium'}}</td>
+<td>Due: {{todo.dueDate | date: 'medium'}}</td>
+<td>Completed: {{todo.completeDate | date: 'medium'}}</td>
+<td>
+  <todo-comment *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment">
+  </todo-comment>
+</td>

@@ -6,9 +6,11 @@ import { TodosService } from './todos.service';
 @Component({
   selector: 'todo-list',
   template: `
-  <div *ngFor="let todo of this.todos">
+  <table>
+  <tr *ngFor="let todo of this.todos">
     <todo [todo]="todo"></todo>
-  </div>
+  </tr>
+  </table>
   `,
   providers:  [ TodosService ]
 })

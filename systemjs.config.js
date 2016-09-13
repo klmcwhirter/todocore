@@ -21,12 +21,6 @@
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-      '@angular2-material/core': 'npm:@angular2-material/core/core.umd.js',
-      '@angular2-material/button': 'npm:@angular2-material/button/button.js',
-      '@angular2-material/card': 'npm:@angular2-material/card/card.umd.js',
-      '@angular2-material/icon': 'npm:@angular2-material/icon/icon.umd.js',
-      '@angular2-material/sidenav': 'npm:@angular2-material/sidenav/sidenav.js',
-      '@angular2-material/toolbar': 'npm:@angular2-material/toolbar/toolbar.umd.js',
 
       // other libraries
       'rxjs': 'npm:rxjs'
@@ -35,9 +29,6 @@
     packages: {
       app: {
         main: 'main.js',
-        defaultExtension: 'js'
-      },
-      lib: {
         defaultExtension: 'js'
       },
       rxjs: {
