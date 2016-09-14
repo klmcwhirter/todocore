@@ -35,7 +35,7 @@ GET api/todos HTTP/1.1
 GET api/todos/5 HTTP/1.1
 ```
 
-### Create a todo based on the {todo} passed in. 
+### Create a todo based on the {todo} passed in; return the list of todos as JSON
 ```http
 POST api/todos HTTP/1.1
 content-type: application/json
@@ -43,7 +43,7 @@ content-type: application/json
 {todo as JSON}
 ```
 
-### Update the todo with Id of 5 based on the {todo} passed in. By default the {todo} is expected in JSON format
+### Update the todo with Id of 5 based on the {todo} passed in. By default the {todo} is expected in JSON format; return the list of todos as JSON
 ```http
 PUT api/todos/5 HTTP/1.1
 content-type: application/json
@@ -51,15 +51,14 @@ content-type: application/json
 {todo as JSON}
 ```
 
-### Mark the todo with id 5 as completed
+### Mark the todo with id 5 as completed; return the list of todos as JSON
 ```http
 PUT api/todos/markComplete/5 HTTP/1.1
 content-type: application/json
 
-{todo as JSON}
 ```
 
-### Delete the todo with Id of 5
+### Delete the todo with Id of 5; return the list of todos as JSON
 ```http
 DELETE api/todos/5 HTTP/1.1
 ```
