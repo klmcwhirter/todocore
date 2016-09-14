@@ -1,4 +1,17 @@
-.table>tr>tbody>td,
-.table>tr>thead>th {
-  padding: 2px !important;
+todo>md-card {
+  margin: 0.5em;
+  width: fit-content;
+}
+
+.todo-label {
+  color: lightgray;
+}
+
+.todo-complete {
+  float: right;
+}
+
+.todocomment-id,
+.todocomment-updated {
+  color: lightgray;
 }

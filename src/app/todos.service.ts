@@ -25,23 +25,27 @@ export class TodosService {
                         .catch(this.handleError);
     }
 
-    postTodo(todo: Todo): Observable<any> {
+    postTodo(todo: Todo): Observable<Todo[]> {
         return this.http.post('api/todos/', todo)
+                        .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
 
-    putTodo(todo: Todo): Observable<any> {
+    putTodo(todo: Todo): Observable<Todo[]> {
         return this.http.post('api/todos/' + todo.id, todo)
+                        .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
 
-    deleteTodo(id: number): Observable<any> {
+    deleteTodo(id: number): Observable<Todo[]> {
         return this.http.delete('api/todos/' + id)
+                        .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
 
-    markCompleteTodo(id: number, isComplete: boolean): Observable<any> {
+    markCompleteTodo(id: number, isComplete: boolean): Observable<Todo[]> {
         return this.http.put('api/todos/markComplete/' + id + '/' + isComplete.toString(), {})
+                        .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
 

@@ -1,9 +1,16 @@
-<td>{{todo.id}}</td>
-<td>{{todo.task}}</td>
-<td>{{todo.createDate | date: 'medium'}}</td>
-<td>{{todo.dueDate | date: 'medium'}}</td>
-<td>{{todo.isComplete}}</td>
-<td>{{todo.completeDate | date: 'medium'}}</td>
-<td>
-  <p *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment"></p>
-</td>
+<md-card>
+  <md-card-title>{{todo.task}}</md-card-title>
+  <md-card-subtitle>Id: {{todo.id}}
+    <span *ngIf="todo.isComplete" class="todo-complete">
+      <md-icon style="font-size: 14px;">done</md-icon>{{todo.completeDate | date: 'short'}}
+    </span>
+    <p><span class="todo-label">Due:</span> {{todo.dueDate | date: 'short'}} <span class="todo-label">Created:</span> {{todo.createDate | date: 'short'}}</p>
+  </md-card-subtitle>
+  <md-card-content>
+    <p *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment"></p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button (click)="this.todoList.toggleComplete(todo)"><md-icon>done</md-icon></button>
+    <button md-button (click)="this.todoList.delete(todo)"><md-icon>delete</md-icon></button>
+  </md-card-actions>
+</md-card>

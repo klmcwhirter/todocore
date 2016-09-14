@@ -31,7 +31,7 @@ namespace todocore.Controllers
         // GET api/todos/5
         // Returns the todo with Id of 5 as a JSON list
         [HttpGet("{id:int}")]
-        public IList<Todo> Get(int id)
+        public IEnumerable<Todo> Get(int id)
         {
             var todos = ctx.Todos.Include(c => c.TodoComments).Where(t => t.Id == id).ToList();
 
@@ -41,34 +41,38 @@ namespace todocore.Controllers
         // POST api/todos
         // Create a todo based on the {todo} passed in. 
         [HttpPost]
-        public void Post([FromBody]Todo todo)
+        public IEnumerable<Todo> Post([FromBody]Todo todo)
         {
             if(ModelState.IsValid)
             {
-                todo.CreateDate = DateTime.Now;
+                todo.CreateDate = DateTime.Now.ToUniversalTime();
                 foreach (var c in todo.TodoComments)
                 {
-                    c.UpdatedOn = DateTime.Now;
+                    c.UpdatedOn = DateTime.Now.ToUniversalTime();
                 }
                 ctx.Todos.Add(todo);
                 ctx.SaveChanges();
             }
+
+            return Get();
         }
 
         // PUT api/todos/5
         // Update the todo with Id of {id} based on the {todo} passed in. 
         [HttpPut("{id:int}")]
-        public void Put(int id, [FromBody]Todo todo)
+        public IEnumerable<Todo> Put(int id, [FromBody]Todo todo)
         {
             if(ModelState.IsValid)
             {
                 foreach (var c in todo.TodoComments)
                 {
-                    c.UpdatedOn = DateTime.Now;
+                    c.UpdatedOn = DateTime.Now.ToUniversalTime();
                 }
                 ctx.Todos.Update(todo);
                 ctx.SaveChanges();
             }
+
+            return Get();
         }
 
         // PUT api/todos/markComplete/5
@@ -78,7 +82,7 @@ namespace todocore.Controllers
         [Route("markComplete/{id:int}")]
         [Route("markComplete/{id:int}/{isComplete:bool}")]
         [HttpPut]
-        public void MarkComplete(int id, bool isComplete = true)
+        public IEnumerable<Todo> MarkComplete(int id, bool isComplete = true)
         {
             var todos = Get(id);
             if(todos.Count() > 0)
@@ -86,23 +90,27 @@ namespace todocore.Controllers
                 foreach (var todo in todos)
                 {
                     todo.IsComplete = isComplete;
-                    todo.CompleteDate = isComplete ? DateTime.Now : (DateTime?)null;
+                    todo.CompleteDate = isComplete ? DateTime.Now.ToUniversalTime() : (DateTime?)null;
                     ctx.Todos.Update(todo);
                     ctx.SaveChanges();
                 }
             }
+
+            return Get();
         }
 
         // DELETE api/todos/5
         // Deletes the todo with Id of 5
         [HttpDelete("{id:int}")]
-        public void Delete(int id)
+        public IEnumerable<Todo> Delete(int id)
         {
             var todos = Get(id);
-            if(todos.Count() < 1)
+            if(todos.Count() > 0)
             {
                 ctx.Todos.RemoveRange(todos);
+                ctx.SaveChanges();
             }
+            return Get();
         }
 
 
@@ -114,8 +122,8 @@ namespace todocore.Controllers
             var todo = new Todo {
                 Task = "A todo",
                 IsComplete = false,
-                CreateDate = DateTime.Now,
-                DueDate = DateTime.Now.Add(TimeSpan.FromDays(1.0)),
+                CreateDate = DateTime.Now.ToUniversalTime(),
+                DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0)),
                 CompleteDate = null
             };
             ctx.Todos.Add(todo);
@@ -126,7 +134,7 @@ namespace todocore.Controllers
             {
                 var comment = new TodoComment {
                     Text = $"{c} for {todo.Id}",
-                    UpdatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now.ToUniversalTime(),
                     TodoId = todo.Id
                 };
                 ctx.TodoComments.Add(comment);

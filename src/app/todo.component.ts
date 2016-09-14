@@ -1,11 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input }  from '@angular/core';
 
-import { Todo }             from './todo.model';
+import { Todo }              from './todo.model';
+
+import { TodoListComponent } from './todo-list.component';
 
 @Component({
-  selector: 'tr[todo]',
-  templateUrl: 'app/todo.component.html'
+  selector: 'todo[todo]',
+  templateUrl: 'app/todo.component.html',
 })
 export class TodoComponent {
   @Input() todo: Todo;
+  @Input() todoList: TodoListComponent;
+
+  constructor() {}
 }

@@ -27,4 +27,21 @@ export class TodoListComponent implements OnInit {
         error => this.errorMessage = < any > error
       );
   }
+
+  delete (todo: Todo) {
+    this.todosService.deleteTodo(todo.id)
+      .subscribe(
+        todos => this.todos = todos,
+        error => this.errorMessage = < any > error
+      );
+  }
+
+  toggleComplete (todo: Todo) {
+    this.todosService.markCompleteTodo(todo.id, !todo.isComplete)
+      .subscribe(
+        todos => this.todos = todos,
+        error => this.errorMessage = < any > error
+      );
+  }
+
 }

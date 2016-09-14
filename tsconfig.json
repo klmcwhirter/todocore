@@ -12,7 +12,7 @@
     //   "./src/app",
     //   "./wwwroot/lib"
     // ],
-    "outDir": "./wwwroot/app"
+    "outDir": "./wwwroot"
   },
   "exclude": [
     "./node_modules/**/*",

@@ -29,7 +29,7 @@ gulp.task('clean:dotnet', function () {
   });
 });
 
-gulp.task('clean:lib', function () {
+gulp.task('clean:vendor', function () {
   return del(['./wwwroot/**'], {
     dryRun: false
   }).then(function (paths) {
@@ -39,11 +39,11 @@ gulp.task('clean:lib', function () {
   });
 });
 
-gulp.task('clean', ['clean:dotnet', 'clean:lib']);
+gulp.task('clean', ['clean:dotnet', 'clean:vendor']);
 
-gulp.task('copy:lib', function () {
+gulp.task('copy:vendor', function () {
   return gulp.src('node_modules/**/*')
-    .pipe(gulp.dest('./wwwroot/lib'));
+    .pipe(gulp.dest('./wwwroot/vendor'));
 });
 
 gulp.task('default', ['help']);
@@ -67,20 +67,20 @@ gulp.task('build:dotnet:update', ['build:dotnet'], function () {
   return dotnetUpdate();
 });
 
-gulp.task('build:lib:typings', function () {
+gulp.task('build:vendor:typings', function () {
   return gulp.src('./typings.json')
     .pipe(gulpTypings());
 });
 
-gulp.task('build:app', ['copy:css', 'copy:html', 'copy:lib', 'copy:sysjsconfig', 'build:lib:typings'], function () {
+gulp.task('build:app', ['copy:css', 'copy:html', 'copy:vendor'], function () {
   var tsResult = tsProject.src()
     .pipe(gulpTypescript(tsProject));
 
   return tsResult.js
-    .pipe(gulp.dest('./wwwroot/app'));
+    .pipe(gulp.dest('./wwwroot'));
 });
 
-gulp.task('build', ['build:app', 'build:dotnet:update']);
+gulp.task('build', ['build:vendor:typings', 'build:app', 'build:dotnet:update']);
 
 gulp.task('clean:app', function () {
   return del([
@@ -102,17 +102,12 @@ gulp.task('copy:html', function () {
     .pipe(gulp.dest('./wwwroot'));
 });
 
-gulp.task('copy:lib', function () {
+gulp.task('copy:vendor', function () {
   return gulp.src('node_modules/**/*')
-    .pipe(gulp.dest('./wwwroot/lib'));
+    .pipe(gulp.dest('./wwwroot/vendor'));
 });
 
 gulp.task('copy:css', function () {
   return gulp.src('src/**/*.css')
-    .pipe(gulp.dest('./wwwroot'));
-});
-
-gulp.task('copy:sysjsconfig', function () {
-  return gulp.src('./systemjs.config.js')
     .pipe(gulp.dest('./wwwroot'));
 });
