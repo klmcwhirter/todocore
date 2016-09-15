@@ -17,7 +17,7 @@ is a simple (naive) implementation of the [Todo application made famous by John 
 
 * [AngularJS 2](https://angular.io/) is the next version of AngularJS built from the ground up to support features of ECMAScript 6.
 
-* [AngularJS 2 Material](https://material.angular.io/) are the material design coponents for AngularJS 2.
+* [AngularJS 2 Material](https://material.angular.io/) are the material design components for AngularJS 2.
 
 * [Sqlite](https://www.sqlite.org/) database - but could easily use another database by using a different [EF Core data provider](https://docs.efproject.net/en/latest/providers/index.html#).
 
