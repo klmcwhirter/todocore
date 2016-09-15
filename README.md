@@ -3,7 +3,7 @@
 <span>[![Build Status](https://circleci.com/gh/klmcwhirter/todocore.svg?style=shield)](https://circleci.com/gh/klmcwhirter/todocore)</span>
 
 
-This is an app written based on .NET Core, ASP.NET Core, Bootstrap and AngularJS 2.
+This is an app written based on .NET Core, ASP.NET Core, AngularJS 2 and Material.
 
 It is my first attempt at writing a SPA using ASP.NET Core and
 is a simple (naive) implementation of the [Todo application made famous by John Papa](https://johnpapa.net/inside-the-asp-net-single-page-apps-template/).
@@ -17,10 +17,26 @@ is a simple (naive) implementation of the [Todo application made famous by John 
 
 * [AngularJS 2](https://angular.io/) is the next version of AngularJS built from the ground up to support features of ECMAScript 6.
 
-* The app also takes advantage of the [ng-bootstrap](https://ng-bootstrap.github.io/#/home) integration layer.
+* [AngularJS 2 Material](https://material.angular.io/) are the material design coponents for AngularJS 2.
 
-* This app uses a Sqlite database. But could easily use another database by using a different [EF Core data provider](https://docs.efproject.net/en/latest/providers/index.html#).
+* [Sqlite](https://www.sqlite.org/) database - but could easily use another database by using a different [EF Core data provider](https://docs.efproject.net/en/latest/providers/index.html#).
 
+# How to run the app
+```bash
+# download the docker image
+docker pull klmcwhirter/todocore
+# start a container
+docker run -d -p 5000:5000 --name todocore klmcwhirter/todocore
+docker logs -f todocore
+# seed the database
+./etc/seed.sh
+```
+Go to [http://localhost:5000/](http://localhost:5000/) in your browser
+
+You will see a list of 5 todo items displayed using Angular2 Material Card. There are actions on each card; one to toggle the todo item
+complete status, and another to delete the todo item.
+
+![todocore screenshot](todocore-screenshot.png)
 
 # Todos Web Api
 The TodosController provides the following API endpoints.
