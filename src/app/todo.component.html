@@ -1,16 +1,25 @@
 <md-card>
   <md-card-title>{{todo.task}}</md-card-title>
   <md-card-subtitle>Id: {{todo.id}}
-    <span *ngIf="todo.isComplete" class="todo-complete">
+    <span *ngIf="todo.isComplete" class="todo-smaller todo-right">
       <md-icon style="font-size: 14px;">done</md-icon>{{todo.completeDate | date: 'short'}}
     </span>
-    <p><span class="todo-label">Due:</span> {{todo.dueDate | date: 'short'}} <span class="todo-label">Created:</span> {{todo.createDate | date: 'short'}}</p>
+    <p class="todo-smaller">
+      <span class="todo-label">Due:</span> {{todo.dueDate | date: 'short'}}
+      <span class="todo-right">
+        <span class="todo-label">Created:</span> {{todo.createDate | date: 'short'}}
+      </span>
+    </p>
   </md-card-subtitle>
   <md-card-content>
     <p *ngFor="let todoComment of todo.todoComments" [todoComment]="todoComment"></p>
+    <div *ngIf="addingComment">
+      <md-input id="newComment" placeholder="Enter a new comment. Hit return to add." style="width: 100%;" [(ngModel)]="this.newComment" (change)="addComment()"></md-input>
+    </div>
   </md-card-content>
-  <md-card-actions>
-    <button md-button (click)="this.todoList.toggleComplete(todo)"><md-icon>done</md-icon></button>
-    <button md-button (click)="this.todoList.delete(todo)"><md-icon>delete</md-icon></button>
+  <md-card-actions align="end">
+    <button md-button (click)="addingComment=!addingComment" color="primary"><md-icon>add</md-icon></button>
+    <button md-button (click)="todoList.toggleComplete(todo)" color="primary"><md-icon>done</md-icon></button>
+    <button md-button (click)="todoList.delete(todo)" color="accent"><md-icon>delete</md-icon></button>
   </md-card-actions>
 </md-card>

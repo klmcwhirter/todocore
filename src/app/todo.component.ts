@@ -12,5 +12,14 @@ export class TodoComponent {
   @Input() todo: Todo;
   @Input() todoList: TodoListComponent;
 
-  constructor() {}
+  addingComment: boolean;
+  newComment: string;
+
+  constructor() {
+    this.addingComment = false;
+  }
+
+  addComment() {
+    this.todoList.addComment(this.todo, this.newComment);
+  }
 }

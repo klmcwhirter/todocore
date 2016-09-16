@@ -59,6 +59,14 @@ content-type: application/json
 {todo as JSON}
 ```
 
+### Create a todo comment for todo 5 based on the {todoComment} passed in. Note only the text field is used.
+```http
+POST api/todos/5/comment HTTP/1.1
+content-type: application/json
+
+{todoComment as JSON}
+```
+
 ### Update the todo with Id of 5 based on the {todo} passed in. By default the {todo} is expected in JSON format; return the list of todos as JSON
 ```http
 PUT api/todos/5 HTTP/1.1

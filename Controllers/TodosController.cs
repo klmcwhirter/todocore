@@ -57,6 +57,29 @@ namespace todocore.Controllers
             return Get();
         }
 
+        // POST api/todos/5/comment
+        // Create a todo comment based on the {todo} and {comment} passed in.
+        [HttpPost("{id:int}/comment")]
+        public IEnumerable<Todo> PostComment(int id, [FromBody]TodoComment todoComment)
+        {
+            var todos = Get(id);
+            if(todos.Count() > 0)
+            {
+                foreach (var todo in todos)
+                {
+                    todoComment.UpdatedOn = DateTime.Now.ToUniversalTime();
+                    todoComment.TodoId = todo.Id;
+                    ctx.TodoComments.Add(todoComment);
+
+                    ctx.Todos.Update(todo);
+                    ctx.SaveChanges();
+                    break;
+                }
+            }
+
+            return Get();
+        }
+
         // PUT api/todos/5
         // Update the todo with Id of {id} based on the {todo} passed in. 
         [HttpPut("{id:int}")]

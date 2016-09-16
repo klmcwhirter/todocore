@@ -6,7 +6,7 @@ import { Observable }     from 'rxjs/Observable';
 import './rxjs-operators';
 
 
-import { Todo } from './todo.model';
+import { Todo, TodoComment } from './todo.model';
 
 @Injectable()
 export class TodosService {
@@ -33,6 +33,13 @@ export class TodosService {
 
     putTodo(todo: Todo): Observable<Todo[]> {
         return this.http.post('api/todos/' + todo.id, todo)
+                        .map((res: Response) => res.json())
+                        .catch(this.handleError);
+    }
+
+    postTodoComment(id: number, comment: string): Observable<Todo[]> {
+        let todoComment = new TodoComment(0, comment, new Date(), id);
+        return this.http.post('api/todos/' + id + '/comment', todoComment)
                         .map((res: Response) => res.json())
                         .catch(this.handleError);
     }

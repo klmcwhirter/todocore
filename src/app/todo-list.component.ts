@@ -20,8 +20,8 @@ export class TodoListComponent implements OnInit {
     private todosService: TodosService
   ) {}
 
-  getTodos() {
-    this.todosService.getTodos()
+  addComment(todo: Todo, comment: string) {
+    this.todosService.postTodoComment(todo.id, comment)
       .subscribe(
         todos => this.todos = todos,
         error => this.errorMessage = < any > error
@@ -30,6 +30,14 @@ export class TodoListComponent implements OnInit {
 
   delete (todo: Todo) {
     this.todosService.deleteTodo(todo.id)
+      .subscribe(
+        todos => this.todos = todos,
+        error => this.errorMessage = < any > error
+      );
+  }
+
+  getTodos() {
+    this.todosService.getTodos()
       .subscribe(
         todos => this.todos = todos,
         error => this.errorMessage = < any > error

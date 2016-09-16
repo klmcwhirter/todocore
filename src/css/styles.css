@@ -1,17 +1,26 @@
 todo>md-card {
   margin: 0.5em;
-  width: fit-content;
+  width: 406px;
+  box-sizing: border-box;
 }
 
 .todo-label {
   color: lightgray;
 }
 
-.todo-complete {
+.todo-right {
   float: right;
+}
+
+.todo-smaller {
+  font-size: smaller;
 }
 
 .todocomment-id,
 .todocomment-updated {
   color: lightgray;
+}
+
+.todocomment-text {
+  color: "primary";
 }
