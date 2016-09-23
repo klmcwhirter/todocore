@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using todocore.Models;
@@ -139,11 +140,18 @@ namespace todocore.Controllers
 
         // GET api/create
         // Creates a sample todo
-        [HttpGet("create")]
-        public IEnumerable<string> Create()
+        [Route("create")]
+        [Route("create/{word}")]
+        [HttpGet]
+        public IEnumerable<string> Create(string word = "")
         {
+            var article = "A";
+            if(Regex.IsMatch(word, "^[aeiouAEIoU]"))
+            {
+                article = "An";
+            }
             var todo = new Todo {
-                Task = "A todo",
+                Task = $"{article} {word} todo",
                 IsComplete = false,
                 CreateDate = DateTime.Now.ToUniversalTime(),
                 DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0)),

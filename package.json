@@ -5,11 +5,13 @@
   "scripts": {
     "build": "gulp build",
     "clean": "gulp clean",
+    "distclean": "npm run clean && rm -fr project.lock.json node_modules typings",
     "docker-build": "docker build -t klmcwhirter/todocore .",
     "docker-run": "docker-compose up -d && docker-compose logs -f",
     "docker-stop": "docker-compose down -v",
     "sqlite": "sqlite3 bin/Debug/netcoreapp1.0/todocore.db",
-    "start": "dotnet run"
+    "start": "dotnet run",
+    "prestart": "npm install && dotnet restore && typings install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -34,11 +36,11 @@
     "gulp": "^3.9.1",
     "gulp-dotnet": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.13.6",
+    "gulp-typescript": "2.13.6",
     "gulp-typings": "^2.0.4",
     "lifecycle": "^1.0.4",
     "typescript": "2.0.0",
-    "typings": "^1.3.3"
+    "typings": "1.3.3"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.5",
@@ -57,7 +59,9 @@
     "@angular2-material/input": "2.0.0-alpha.7-4",
     "@angular2-material/list": "2.0.0-alpha.7-4",
     "@angular2-material/toolbar": "2.0.0-alpha.7-4",
+    "@types/hammerjs": "^2.0.33",
     "core-js": "^2.4.1",
+    "hammerjs": "^2.0.8",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "^0.19.38",
