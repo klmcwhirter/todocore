@@ -7,7 +7,7 @@ COPY . /app
 WORKDIR /app
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
-    && apt-get install -y nodejs \
+    && apt-get install -y --no-install-recommends nodejs wamerican-small \
     && dotnet restore \
     && npm install \
     && ./node_modules/.bin/gulp build
