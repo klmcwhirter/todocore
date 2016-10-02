@@ -47,6 +47,11 @@ namespace todocore.Controllers
             if(ModelState.IsValid)
             {
                 todo.CreateDate = DateTime.Now.ToUniversalTime();
+                if(todo.DueDate == null)
+                {
+                    // Default to due in 1 day
+                    todo.DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0));
+                }
                 foreach (var c in todo.TodoComments)
                 {
                     c.UpdatedOn = DateTime.Now.ToUniversalTime();
