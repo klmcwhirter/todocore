@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Todo } from './todo.model';
+import { Todo, TodoPost } from './todo.model';
 import { TodosService } from './todos.service';
 
 @Component({
@@ -11,6 +11,10 @@ import { TodosService } from './todos.service';
 export class TodoListComponent implements OnInit {
   todos: Todo[];
   errorMessage: string;
+
+  addingTodo: boolean;
+  newTodoTask: string;
+  newTodoDue: any;
 
   ngOnInit() {
     this.getTodos();
@@ -24,15 +28,26 @@ export class TodoListComponent implements OnInit {
     this.todosService.postTodoComment(todo.id, comment)
       .subscribe(
         todos => this.todos = todos,
-        error => this.errorMessage = < any > error
+        error => this.errorMessage = <any> error
       );
+  }
+
+  addTodo() {
+    let newTodo = new TodoPost(this.newTodoTask, this.newTodoDue, []);
+    this.todosService.postTodo(newTodo)
+      .subscribe(
+        todos => this.todos = todos,
+        error => this.errorMessage = <any> error
+      );
+      this.addingTodo = false;
+      this.newTodoTask = '';
   }
 
   delete (todo: Todo) {
     this.todosService.deleteTodo(todo.id)
       .subscribe(
         todos => this.todos = todos,
-        error => this.errorMessage = < any > error
+        error => this.errorMessage = <any> error
       );
   }
 
@@ -40,7 +55,7 @@ export class TodoListComponent implements OnInit {
     this.todosService.getTodos()
       .subscribe(
         todos => this.todos = todos,
-        error => this.errorMessage = < any > error
+        error => this.errorMessage = <any> error
       );
   }
 
@@ -48,7 +63,7 @@ export class TodoListComponent implements OnInit {
     this.todosService.markCompleteTodo(todo.id, !todo.isComplete)
       .subscribe(
         todos => this.todos = todos,
-        error => this.errorMessage = < any > error
+        error => this.errorMessage = <any> error
       );
   }
 

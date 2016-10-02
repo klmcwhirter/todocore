@@ -18,3 +18,11 @@ export class Todo {
     public todoComments: TodoComment[]
   ) {}
 }
+
+export class TodoPost {
+  constructor(
+    public task: string,
+    public dueDate: any, // Nullable type Date
+    public todoComments: TodoComment[]    
+  ) {}
+}

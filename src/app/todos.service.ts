@@ -6,7 +6,7 @@ import { Observable }     from 'rxjs/Observable';
 import './rxjs-operators';
 
 
-import { Todo, TodoComment } from './todo.model';
+import { Todo, TodoComment, TodoPost } from './todo.model';
 
 @Injectable()
 export class TodosService {
@@ -25,7 +25,7 @@ export class TodosService {
                         .catch(this.handleError);
     }
 
-    postTodo(todo: Todo): Observable<Todo[]> {
+    postTodo(todo: TodoPost): Observable<Todo[]> {
         return this.http.post('api/todos/', todo)
                         .map((res: Response) => res.json())
                         .catch(this.handleError);
