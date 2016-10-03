@@ -1,5 +1,7 @@
 <div>
-  <button md-fab (click)="addingTodo=!addingTodo" color="primary"><md-icon>add</md-icon></button>
+  <md-toolbar color="primary">
+    <button md-fab (click)="addingTodo=!addingTodo" color="primary" id="todo-button"><md-icon>add</md-icon></button>
+  </md-toolbar>
   <div *ngIf="addingTodo">
     <md-input id="newTodoTask" placeholder="Enter a new task. Hit return to add." style="width: 100%;" [(ngModel)]="this.newTodoTask" (change)="this.addTodo()"></md-input>
   </div>
