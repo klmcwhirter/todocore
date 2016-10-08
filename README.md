@@ -13,8 +13,6 @@ is a simple (naive) implementation of the [Todo application made famous by John 
 
 * [ASP.NET Core](http://www.asp.net/core) is an Open Source version of the Microsoft ASP.NET framework.
 
-* [Bootstrap 4](http://v4-alpha.getbootstrap.com/) is the latest verion of the Twitter CSS library on which AngularJS 2 depends.
-
 * [AngularJS 2](https://angular.io/) is the next version of AngularJS built from the ground up to support features of ECMAScript 6.
 
 * [AngularJS 2 Material](https://material.angular.io/) are the material design components for AngularJS 2.
