@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using todocore.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,18 +12,18 @@ namespace todocore.Controllers
     [Route("api/[controller]")]
     public class TodosController : Controller
     {
-        private DbContextSqlite ctx;
-    
-        public TodosController (DbContextSqlite ctx)
+        private ITodosRepository todosRepository;
+
+        public TodosController (ITodosRepository todosRepository)
         {
-          this.ctx = ctx;
+            this.todosRepository = todosRepository;
         }
 
         // GET api/todos
         [HttpGet]
         public IEnumerable<Todo> Get()
         {
-            var todos = ctx.Todos.Include(c => c.TodoComments).ToList();
+            var todos = todosRepository.GetAll();
 
             return todos;
         }
@@ -34,7 +33,7 @@ namespace todocore.Controllers
         [HttpGet("{id:int}")]
         public IEnumerable<Todo> Get(int id)
         {
-            var todos = ctx.Todos.Include(c => c.TodoComments).Where(t => t.Id == id).ToList();
+            var todos = todosRepository.Get(id);
 
             return todos;
         }
@@ -56,8 +55,7 @@ namespace todocore.Controllers
                 {
                     c.UpdatedOn = DateTime.Now.ToUniversalTime();
                 }
-                ctx.Todos.Add(todo);
-                ctx.SaveChanges();
+                todosRepository.Add(todo);
             }
 
             return Get();
@@ -75,10 +73,7 @@ namespace todocore.Controllers
                 {
                     todoComment.UpdatedOn = DateTime.Now.ToUniversalTime();
                     todoComment.TodoId = todo.Id;
-                    ctx.TodoComments.Add(todoComment);
-
-                    ctx.Todos.Update(todo);
-                    ctx.SaveChanges();
+                    todosRepository.AddComment(todo, todoComment);
                     break;
                 }
             }
@@ -97,8 +92,7 @@ namespace todocore.Controllers
                 {
                     c.UpdatedOn = DateTime.Now.ToUniversalTime();
                 }
-                ctx.Todos.Update(todo);
-                ctx.SaveChanges();
+                todosRepository.Update(todo);
             }
 
             return Get();
@@ -120,8 +114,8 @@ namespace todocore.Controllers
                 {
                     todo.IsComplete = isComplete;
                     todo.CompleteDate = isComplete ? DateTime.Now.ToUniversalTime() : (DateTime?)null;
-                    ctx.Todos.Update(todo);
-                    ctx.SaveChanges();
+                    todosRepository.Update(todo);
+                    break;
                 }
             }
 
@@ -136,8 +130,7 @@ namespace todocore.Controllers
             var todos = Get(id);
             if(todos.Count() > 0)
             {
-                ctx.Todos.RemoveRange(todos);
-                ctx.SaveChanges();
+                todosRepository.DeleteRange(todos);
             }
             return Get();
         }
@@ -162,8 +155,7 @@ namespace todocore.Controllers
                 DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0)),
                 CompleteDate = null
             };
-            ctx.Todos.Add(todo);
-            ctx.SaveChanges(); // Make sure the Id gets generated
+            todosRepository.Add(todo); // Make sure the Id gets generated
 
             var comments = new[] { "Comment 1", "Comment 2" };
             foreach (var c in comments)
@@ -173,18 +165,10 @@ namespace todocore.Controllers
                     UpdatedOn = DateTime.Now.ToUniversalTime(),
                     TodoId = todo.Id
                 };
-                ctx.TodoComments.Add(comment);
+                todosRepository.AddComment(todo, comment);
             }
-            ctx.SaveChanges();
 
             return new [] { "todo created" };
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            // Release db resources
-            ctx.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

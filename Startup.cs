@@ -28,6 +28,7 @@ namespace todocore
             // Add framework services.
             services.AddMvc();
             services.AddTransient<DbContextSqlite, DbContextSqlite>();
+            services.AddTransient<ITodosRepository, TodosRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
