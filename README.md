@@ -29,9 +29,11 @@ docker logs -f todocore
 # seed the database
 ./etc/seed.sh
 ```
+*Note to execute the seed.sh script you may want to clone the repository.*
+
 Go to [http://localhost:5000/](http://localhost:5000/) in your browser
 
-You will see a list of 5 todo items displayed using Angular2 Material Card. There are actions on each card; one to toggle the todo item
+You will see a list of 10 todo items displayed. The big plus sign in the toolbar at the top allows you to add a new todo task. There are actions on each card; one to add a new comment, one to toggle the todo item
 complete status, and another to delete the todo item.
 
 ![todocore screenshot](todocore-screenshot.png)
@@ -88,4 +90,10 @@ DELETE api/todos/5 HTTP/1.1
 ### Create a sample todo
 ```http
 GET api/create HTTP/1.1
+```
+
+### Create a sample todo and pass in a word to use in the task name.
+It Will pick the appropriate article to use based on whether the word begins with a vowel or not. e.g., A topical Todo *or* An underlying Todo
+```http
+GET api/create/word HTTP/1.1
 ```
