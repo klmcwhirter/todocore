@@ -10,6 +10,7 @@
     "docker-build": "docker build -t klmcwhirter/todocore .",
     "docker-run": "docker-compose up -d && docker-compose logs -f",
     "docker-stop": "docker-compose down -v",
+    "docker-test": "docker-compose exec -T todocore npm run test",
     "setup": "npm install && dotnet restore && typings install && npm run build",
     "sqlite": "sqlite3 todocore/bin/Debug/netcoreapp1.0/todocore.db",
     "start": "dotnet run -p todocore",
