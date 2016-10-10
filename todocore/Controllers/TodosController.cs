@@ -51,10 +51,6 @@ namespace todocore.Controllers
                     // Default to due in 1 day
                     todo.DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0));
                 }
-                foreach (var c in todo.TodoComments)
-                {
-                    c.UpdatedOn = DateTime.Now.ToUniversalTime();
-                }
                 todosRepository.Add(todo);
             }
 
@@ -88,10 +84,6 @@ namespace todocore.Controllers
         {
             if(ModelState.IsValid)
             {
-                foreach (var c in todo.TodoComments)
-                {
-                    c.UpdatedOn = DateTime.Now.ToUniversalTime();
-                }
                 todosRepository.Update(todo);
             }
 
