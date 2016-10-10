@@ -8,10 +8,9 @@ WORKDIR /app
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && apt-get install -y --no-install-recommends nodejs wamerican-small \
-    && dotnet restore \
-    && npm install \
-    && ./node_modules/.bin/gulp build
+    && npm run setup \
+    && npm run build
 
 EXPOSE 5000/tcp
 
-ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
+ENTRYPOINT ["dotnet", "run", "-p", "todocore" ]

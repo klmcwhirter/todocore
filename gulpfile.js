@@ -1,3 +1,5 @@
+/*--------------------------------------------------------------------------*/
+
 var gulp = require('gulp');
 var gulpUtil = require('gulp-util');
 var gulpDotnet = require('gulp-dotnet');
@@ -7,20 +9,53 @@ var gulpTypescript = require('gulp-typescript');
 var tsProject = gulpTypescript.createProject('./tsconfig.json');
 var del = require('del');
 
-function dotnetUpdate(done) {
-  proc.exec('dotnet ef database update', function (err, stdout, stderr) {
+/*--------------------------------------------------------------------------*/
 
+function dotnetUpdate(project, done) {
+  proc.exec('dotnet ef database update', {
+    cwd: './' + project
+  }, function (err, stdout, stderr) {
     if (err) {
-      gulpUtil.log(1, 'Restore Error', err);
+      gulpUtil.log('dotnetUpdate: Error', err, stderr);
     } else {
-      gulpUtil.log(1, stdout);
+      gulpUtil.log('dotnetUpdate:', stdout);
     }
     done && done();
   });
 }
 
+function dotnetBuild(project, done) {
+  proc.exec('dotnet build ' + project, {
+    cwd: './'
+  }, function (err, stdout, stderr) {
+    if (err) {
+      gulpUtil.log('dotnetBuild: Failed', err);
+    } else {
+      gulpUtil.log('dotnetBuild:', stdout);
+    }
+    done && done();
+  });
+}
+
+/*--------------------------------------------------------------------------*/
+
+gulp.task('clean:app', function () {
+  return del(['./wwwroot'], {
+    dryRun: false
+  }).then(function (paths) {
+    console.log('Deleted files and folders:\n', paths.join('\n'));
+  }).catch(function (err) {
+    console.log('Delete failed: ' + err);
+  });
+});
+
 gulp.task('clean:dotnet', function () {
-  return del(['./bin/**', './obj/**'], {
+  return del([
+    './todocore/bin',
+    './todocore/obj',
+    './todocore.UnitTests/bin',
+    './todocore.UnitTests/obj'
+  ], {
     dryRun: false
   }).then(function (paths) {
     console.log('Deleted files and folders:\n', paths.join('\n'));
@@ -29,22 +64,9 @@ gulp.task('clean:dotnet', function () {
   });
 });
 
-gulp.task('clean:vendor', function () {
-  return del(['./wwwroot/**'], {
-    dryRun: false
-  }).then(function (paths) {
-    console.log('Deleted files and folders:\n', paths.join('\n'));
-  }).catch(function (err) {
-    console.log('Delete failed: ' + err);
-  });
-});
+gulp.task('clean', ['clean:dotnet', 'clean:app']);
 
-gulp.task('clean', ['clean:dotnet', 'clean:vendor']);
-
-gulp.task('copy:vendor', function () {
-  return gulp.src('node_modules/**/*')
-    .pipe(gulp.dest('./wwwroot/vendor'));
-});
+/*--------------------------------------------------------------------------*/
 
 gulp.task('default', ['help']);
 
@@ -59,12 +81,14 @@ gulp.task('help', function () {
   console.log(`\nYou're probably looking for "clean" or "build".\n\n`);
 });
 
+/*--------------------------------------------------------------------------*/
+
 gulp.task('build:dotnet', function () {
-  return gulpDotnet.build();
+  return dotnetBuild('todocore.UnitTests');
 });
 
 gulp.task('build:dotnet:update', ['build:dotnet'], function () {
-  return dotnetUpdate();
+  return dotnetUpdate('todocore');
 });
 
 gulp.task('build:vendor:typings', function () {
@@ -72,7 +96,7 @@ gulp.task('build:vendor:typings', function () {
     .pipe(gulpTypings());
 });
 
-gulp.task('build:app', ['copy:css', 'copy:html', 'copy:vendor'], function () {
+gulp.task('build:app', ['copy:app'], function () {
   var tsResult = tsProject.src()
     .pipe(gulpTypescript(tsProject));
 
@@ -82,20 +106,12 @@ gulp.task('build:app', ['copy:css', 'copy:html', 'copy:vendor'], function () {
 
 gulp.task('build', ['build:vendor:typings', 'build:app', 'build:dotnet:update']);
 
-gulp.task('clean:app', function () {
-  return del([
-    './wwwroot',
-  ]);
-});
+/*--------------------------------------------------------------------------*/
 
-gulp.task('clean:dotnet', function () {
-  return del([
-    './bin',
-    './obj'
-  ]);
+gulp.task('copy:css', function () {
+  return gulp.src('src/**/*.css')
+    .pipe(gulp.dest('./wwwroot'));
 });
-
-gulp.task('clean', ['clean:dotnet', 'clean:app']);
 
 gulp.task('copy:html', function () {
   return gulp.src('src/**/*.html')
@@ -107,7 +123,6 @@ gulp.task('copy:vendor', function () {
     .pipe(gulp.dest('./wwwroot/vendor'));
 });
 
-gulp.task('copy:css', function () {
-  return gulp.src('src/**/*.css')
-    .pipe(gulp.dest('./wwwroot'));
-});
+gulp.task('copy:app', ['copy:css', 'copy:html', 'copy:vendor']);
+
+/*--------------------------------------------------------------------------*/

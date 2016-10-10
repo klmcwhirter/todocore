@@ -6,13 +6,14 @@
     "build": "gulp build",
     "build-app": "gulp build:app",
     "clean": "gulp clean",
-    "distclean": "npm run clean && rm -fr project.lock.json node_modules typings",
+    "distclean": "npm run clean && rm -fr node_modules typings && find . -name project.lock.json | xargs rm ",
     "docker-build": "docker build -t klmcwhirter/todocore .",
     "docker-run": "docker-compose up -d && docker-compose logs -f",
     "docker-stop": "docker-compose down -v",
-    "sqlite": "sqlite3 bin/Debug/netcoreapp1.0/todocore.db",
-    "start": "dotnet run",
-    "prestart": "npm install && dotnet restore && typings install && npm run build"
+    "setup": "npm install && dotnet restore && typings install && npm run build",
+    "sqlite": "sqlite3 todocore/bin/Debug/netcoreapp1.0/todocore.db",
+    "start": "dotnet run -p todocore",
+    "test": "dotnet test todocore.UnitTests"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,6 @@
+{
+  "projects": [
+    "todocore",
+    "todocore.UnitTests"
+  ]
+}
