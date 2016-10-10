@@ -51,6 +51,7 @@ namespace todocore.Controllers
                     // Default to due in 1 day
                     todo.DueDate = DateTime.Now.ToUniversalTime().Add(TimeSpan.FromDays(1.0));
                 }
+
                 todosRepository.Add(todo);
             }
 
@@ -69,6 +70,7 @@ namespace todocore.Controllers
                 {
                     todoComment.UpdatedOn = DateTime.Now.ToUniversalTime();
                     todoComment.TodoId = todo.Id;
+
                     todosRepository.AddComment(todo, todoComment);
                     break;
                 }
@@ -79,12 +81,31 @@ namespace todocore.Controllers
 
         // PUT api/todos/5
         // Update the todo with Id of {id} based on the {todo} passed in. 
-        [HttpPut("{id:int}")]
-        public IEnumerable<Todo> Put(int id, [FromBody]Todo todo)
+        [HttpPut]
+        public IEnumerable<Todo> Put([FromBody]Todo todo)
         {
             if(ModelState.IsValid)
             {
-                todosRepository.Update(todo);
+                // Carefully replace editable fields being mindful of what is being tracked by EF ...
+                var oldTodo = Get(todo.Id).First();
+                oldTodo.Task = todo.Task;
+                oldTodo.DueDate = todo.DueDate;
+
+                var now = DateTime.Now.ToUniversalTime();
+                if(todo.TodoComments != null)
+                {
+                    foreach (var c in todo.TodoComments)
+                    {
+                        var oldComment = todosRepository.GetTodoComment(c.Id);
+                        if(oldComment.Text != c.Text)
+                        {
+                            oldComment.Text = c.Text;
+                            oldComment.UpdatedOn = now;
+                        }
+                    }
+                }
+
+                todosRepository.Update(oldTodo);
             }
 
             return Get();

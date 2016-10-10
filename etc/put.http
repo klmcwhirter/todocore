@@ -1,21 +1,21 @@
-PUT http://localhost:5000/api/todos/3 HTTP/1.1
+PUT http://localhost:5000/api/todos HTTP/1.1
 content-type: application/json
 
 {
     "id": 3,
-    "task": "A todo",
-    "createDate": "2016-09-04T23:30:28.682875",
+    "task": "A modified todo 3",
+    "createDate": "2016-10-10T06:40:21.657338",
     "dueDate": "2016-09-05T23:30:28.682885",
     "todoComments": [
         {
             "id": 5,
-            "text": "Comment 1 for 3 - modified again",
+            "text": "Comment 1 for 3 - modified again 3",
             "updatedOn": "2016-09-04T23:32:28.685147",
             "todoId": 3
         },
         {
             "id": 6,
-            "text": "Comment 2 for 3 - modified again",
+            "text": "Comment 2 for 3 - modified again 3",
             "updatedOn": "2016-09-04T23:33:28.685217",
             "todoId": 3
         }

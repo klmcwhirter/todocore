@@ -14,5 +14,16 @@ namespace todocore.Models
         public DateTime UpdatedOn { get; set; }
 
         public int TodoId { get; set; }
+
+        public TodoComment Clone()
+        {
+            var rc = new TodoComment {
+                Id = this.Id,
+                UpdatedOn = this.UpdatedOn,
+                Text = this.Text,
+                TodoId = this.TodoId
+            };
+            return rc;
+        }
     }
 }

@@ -22,6 +22,11 @@ namespace todocore.Models
         {
             return ctx.Todos.Include(c => c.TodoComments).Where(t => t.Id == id).ToList();
         }
+        public TodoComment GetTodoComment(int id)
+        {
+            var rc = ctx.TodoComments.Where(oc => oc.Id == id).First();
+            return rc;
+        }
         public void Add(Todo todo)
         {
             ctx.Todos.Add(todo);

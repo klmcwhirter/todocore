@@ -6,6 +6,7 @@ namespace todocore.Models
     {
         IEnumerable<Todo> GetAll();
         IEnumerable<Todo> Get(int id);
+        TodoComment GetTodoComment(int id);
         void Add(Todo todo);
         void AddComment(Todo todo, TodoComment todoComment);
         void Update(Todo todo);

@@ -20,19 +20,13 @@ export class TodosService {
     }
 
     getTodo(id: number): Observable<Todo[]> {
-        return this.http.get('api/todos/' + id)
+        return this.http.get('api/todos' + id)
                         .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
 
     postTodo(todo: TodoPost): Observable<Todo[]> {
-        return this.http.post('api/todos/', todo)
-                        .map((res: Response) => res.json())
-                        .catch(this.handleError);
-    }
-
-    putTodo(todo: Todo): Observable<Todo[]> {
-        return this.http.post('api/todos/' + todo.id, todo)
+        return this.http.post('api/todos', todo)
                         .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
@@ -40,6 +34,12 @@ export class TodosService {
     postTodoComment(id: number, comment: string): Observable<Todo[]> {
         let todoComment = new TodoComment(0, comment, new Date(), id);
         return this.http.post('api/todos/' + id + '/comment', todoComment)
+                        .map((res: Response) => res.json())
+                        .catch(this.handleError);
+    }
+
+    putTodo(todo: Todo): Observable<Todo[]> {
+        return this.http.put('api/todos', todo)
                         .map((res: Response) => res.json())
                         .catch(this.handleError);
     }
