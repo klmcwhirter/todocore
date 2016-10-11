@@ -9,7 +9,7 @@ let gulpSourcemaps = require("gulp-sourcemaps");
 let gulpTypings = require("gulp-typings");
 
 var gulpTypescript = require('gulp-typescript');
-var tsProject = gulpTypescript.createProject('./gulp.tsconfig.json');
+var tsProject = gulpTypescript.createProject('./src/tsconfig.json');
 
 var proc = require('child_process');
 var gulpUtil = require('gulp-util');
@@ -55,15 +55,19 @@ export class Gulpfile {
         .pipe(gulpTypings());
     }
 
-    @Task('build:app', ['copy:app'])
-    buildApp(cb: Function) {
+    @Task('build:app:ts')
+    buildAppTs(cb: Function) {
         var tsResult = tsProject.src('./src/**/*.ts')
         .pipe(gulpSourcemaps.init())
         .pipe(gulpTypescript(tsProject));
-        
+
         return tsResult.js
         .pipe(gulpSourcemaps.write())
         .pipe(gulp.dest('./wwwroot'));
+    }
+
+    @Task('build:app', ['copy:app', 'build:app:ts'])
+    buildApp(cb: Function) {
     }
 
    @SequenceTask('build')
