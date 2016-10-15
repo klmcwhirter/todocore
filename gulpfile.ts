@@ -43,10 +43,15 @@ export class Gulpfile {
 
     @Task('build:dotnet')
     buildDotnet(cb: Function) {
+        return this.dotnetBuild('todocore', cb);
+    }
+
+    @Task('build:dotnet:UnitTests', ['build:dotnet'])
+    buildDotnet(cb: Function) {
         return this.dotnetBuild('todocore.UnitTests', cb);
     }
 
-    @Task('build:dotnet:update', ['build:dotnet'])
+    @Task('build:dotnet:update', ['build:dotnet:UnitTests'])
     buildDotnetUpdate(cb: Function) {
         return this.dotnetUpdate('todocore', cb);
     }
@@ -131,7 +136,6 @@ export class Gulpfile {
         return gulp.src('node_modules/**/*')
         .pipe(gulp.dest(destDir + '/vendor'));
     }
-
 
    @SequenceTask('copy:app')
    copyApp() {
