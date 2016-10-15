@@ -8,11 +8,11 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "outDir": "./wwwroot"
+    "outDir": "./dist"
   },
   "exclude": [
     "./gulpclass.ts",
     "./node_modules/**/*",
-    "./wwwroot/**/*"
+    "./dist/**/*"
   ]
 }

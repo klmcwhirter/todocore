@@ -14,6 +14,8 @@ var tsProject = gulpTypescript.createProject('./src/tsconfig.json');
 var proc = require('child_process');
 var gulpUtil = require('gulp-util');
 
+var destDir = './dist';
+
 /*--------------------------------------------------------------------------*/
 
 @Gulpclass()
@@ -63,7 +65,7 @@ export class Gulpfile {
 
         return tsResult.js
         .pipe(gulpSourcemaps.write())
-        .pipe(gulp.dest('./wwwroot'));
+        .pipe(gulp.dest(destDir));
     }
 
     @Task('build:app', ['copy:app', 'build:app:ts'])
@@ -79,7 +81,7 @@ export class Gulpfile {
 
     @Task('clean:app')
     cleanApp(cb: Function) {
-        return del(["./wwwroot"],  {
+        return del([destDir],  {
             dryRun: false
         }, cb).then(function (paths) {
             console.log('Deleted files and folders:\n', paths.join('\n'));
@@ -115,19 +117,19 @@ export class Gulpfile {
     @Task('copy:css')
     copyCss(cb: Function) {
         return gulp.src('src/**/*.css')
-        .pipe(gulp.dest('./wwwroot'));
+        .pipe(gulp.dest(destDir));
     }
 
     @Task('copy:html')
     copyHtml(cb: Function) {
         return gulp.src('src/**/*.html')
-        .pipe(gulp.dest('./wwwroot'));
+        .pipe(gulp.dest(destDir));
     }
 
     @Task('copy:vendor')
     copyVendor(cb: Function) {
         return gulp.src('node_modules/**/*')
-        .pipe(gulp.dest('./wwwroot/vendor'));
+        .pipe(gulp.dest(destDir + '/vendor'));
     }
 
 

@@ -53,7 +53,7 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
+      "dist",
       "Views",
       "Areas/**/Views",
       "appsettings.json",
